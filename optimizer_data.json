@@ -1,0 +1,206 @@
+{
+  "device_info": {
+    "model": "ASUS TUF F17 FX707ZM",
+    "processor": "Intel Core i7-12700H (14 cores: 6 P-cores + 8 E-cores)",
+    "gpu": "NVIDIA GeForce RTX 3060 (140W TGP)",
+    "memory": "DDR5-4800 (up to 32GB)",
+    "display": "17.3\" FHD 144Hz",
+    "ports": [
+      "2x USB 3.2 Gen 1 Type-A",
+      "1x USB 3.2 Gen 2 Type-C",
+      "1x Thunderbolt 4",
+      "HDMI 2.0b",
+      "Ethernet",
+      "Wi-Fi 6"
+    ]
+  },
+  "optimizations": {
+    "mouse_keyboard_latency": {
+      "registry_tweaks": [
+        {
+          "name": "MouseDataQueueSize",
+          "path": "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\mouclass\\Parameters",
+          "type": "DWORD",
+          "value_decimal": 32,
+          "description": "Réduit le buffer des données souris (valeur recommandée: 16-50)",
+          "restart_required": true
+        },
+        {
+          "name": "KeyboardDataQueueSize",
+          "path": "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\kbdclass\\Parameters",
+          "type": "DWORD",
+          "value_decimal": 32,
+          "description": "Réduit le buffer des données clavier (valeur recommandée: 16-50)",
+          "restart_required": true
+        },
+        {
+          "name": "KeyboardDelay",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Keyboard",
+          "type": "STRING",
+          "value": "0",
+          "description": "Définit le délai avant répétition des touches (0=court)",
+          "restart_required": false
+        },
+        {
+          "name": "KeyboardSpeed",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Keyboard",
+          "type": "STRING",
+          "value": "31",
+          "description": "Définit la vitesse de répétition des touches (31=rapide)",
+          "restart_required": false
+        }
+      ],
+      "mouse_settings": [
+        {
+          "setting": "Désactiver l'accélération souris",
+          "registry_path": "HKEY_CURRENT_USER\\Control Panel\\Mouse",
+          "values": {
+            "MouseThreshold1": "0",
+            "MouseThreshold2": "0",
+            "MouseSpeed": "0"
+          }
+        },
+        {
+          "setting": "Polling rate",
+          "description": "Configurer le taux de rapport à 1000Hz via le logiciel de la souris"
+        }
+      ]
+    },
+    "network_latency": {
+      "tcp_optimizations": [
+        {
+          "name": "TCP Window Scaling",
+          "command": "netsh int tcp set global autotuninglevel=normal",
+          "description": "Active l'auto-tuning TCP pour de meilleures performances"
+        },
+        {
+          "name": "Chimney Offload",
+          "command": "netsh int tcp set global chimney=enabled",
+          "description": "Active le déchargement TCP vers la carte réseau"
+        },
+        {
+          "name": "RSS (Receive Side Scaling)",
+          "command": "netsh int tcp set global rss=enabled",
+          "description": "Active la mise à l'échelle côté réception"
+        },
+        {
+          "name": "ECN (Explicit Congestion Notification)",
+          "command": "netsh int tcp set global ecncapability=enabled",
+          "description": "Active la notification explicite de congestion"
+        }
+      ],
+      "registry_tweaks": [
+        {
+          "name": "TcpAckFrequency",
+          "path": "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters\\Interfaces",
+          "type": "DWORD",
+          "value": 1,
+          "description": "Réduit la fréquence d'accusé de réception TCP"
+        },
+        {
+          "name": "TCPNoDelay",
+          "path": "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters\\Interfaces",
+          "type": "DWORD",
+          "value": 1,
+          "description": "Désactive l'algorithme de Nagle pour réduire la latence"
+        }
+      ]
+    },
+    "menu_delay_optimization": {
+      "registry_tweaks": [
+        {
+          "name": "MenuShowDelay",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Desktop",
+          "type": "STRING",
+          "value": "20",
+          "description": "Réduit le délai d'affichage des menus (défaut: 400ms, recommandé: 20ms)",
+          "restart_required": true
+        }
+      ]
+    },
+    "system_performance": {
+      "power_settings": [
+        {
+          "name": "High Performance Power Plan",
+          "command": "powercfg -duplicatescheme 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c",
+          "description": "Crée un profil haute performance"
+        },
+        {
+          "name": "Ultimate Performance",
+          "command": "powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61",
+          "description": "Active le profil performance ultime (disponible sur Windows 10 Pro/Enterprise)"
+        }
+      ],
+      "registry_tweaks": [
+        {
+          "name": "GlobalTimerResolutionRequests",
+          "path": "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\kernel",
+          "type": "DWORD",
+          "value": 1,
+          "description": "Force la résolution timer à 0.5ms (Windows 11 uniquement)",
+          "restart_required": true
+        },
+        {
+          "name": "SystemResponsiveness",
+          "path": "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile",
+          "type": "DWORD",
+          "value": 10,
+          "description": "Priorise les applications actives (défaut: 20)"
+        }
+      ],
+      "cmd_commands": [
+        {
+          "name": "Disable Dynamic Tick",
+          "command": "bcdedit /set disabledynamictick yes",
+          "description": "Désactive le tick dynamique (DESKTOP UNIQUEMENT - PAS sur portable)",
+          "warning": "Ne pas utiliser sur PC portable"
+        },
+        {
+          "name": "Disable Platform Clock",
+          "command": "bcdedit /set useplatformclock no",
+          "description": "Désactive l'horloge plateforme (DESKTOP UNIQUEMENT)",
+          "warning": "Ne pas utiliser sur PC portable"
+        }
+      ]
+    },
+    "hardware_optimizations": {
+      "usb_optimization": [
+        {
+          "setting": "Désactiver économie d'énergie USB",
+          "path": "Gestionnaire de périphériques > Contrôleurs USB",
+          "action": "Décocher 'Autoriser l'ordinateur à éteindre ce périphérique'"
+        }
+      ],
+      "intel_optimizations": [
+        {
+          "setting": "Ports USB dédiés",
+          "description": "Brancher souris/clavier sur les ports USB les plus hauts de la carte mère (connectés directement au CPU)"
+        }
+      ]
+    }
+  },
+  "safety_warnings": [
+    "Créer un point de restauration avant d'appliquer les modifications",
+    "Ne pas utiliser les commandes bcdedit sur PC portable",
+    "Tester les valeurs MouseDataQueueSize/KeyboardDataQueueSize progressivement",
+    "Valeurs minimales recommandées: 16 (ne pas descendre en dessous)",
+    "Redémarrage requis pour la plupart des modifications registre"
+  ],
+  "recommended_software": [
+    {
+      "name": "MSI Utility V3",
+      "purpose": "Activer le mode MSI sur GPU/périphériques",
+      "url": "https://www.mediafire.com/file/ewpy1p0rr132thk/MSI_util_v3.zip"
+    },
+    {
+      "name": "MarkC Mouse Fix",
+      "purpose": "Désactiver complètement l'accélération souris",
+      "url": "https://donewmouseaccel.blogspot.com/2010/03/markc-windows-7-mouse-acceleration-fix.html"
+    },
+    {
+      "name": "SetTimerResolution",
+      "purpose": "Forcer résolution timer à 0.5ms",
+      "url": "https://github.com/amitxv/TimerResolution/releases"
+    }
+  ]
+}

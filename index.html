@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASUS TUF F17 FX707ZM - Optimiseur de Performances</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>⚡ ASUS TUF F17 Optimizer</h1>
+                    <span class="model-badge">FX707ZM</span>
+                </div>
+                <div class="system-info">
+                    <div class="spec-item">
+                        <span class="spec-label">CPU:</span>
+                        <span class="spec-value">Intel i7-12700H</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">GPU:</span>
+                        <span class="spec-value">RTX 3060 (140W)</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">RAM:</span>
+                        <span class="spec-value">DDR5-4800</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Safety Warning -->
+        <div class="warning-banner">
+            <div class="warning-icon">⚠️</div>
+            <div class="warning-content">
+                <strong>Important:</strong> Créez un point de restauration système avant d'appliquer ces optimisations.
+                <button class="btn-warning-details" onclick="toggleWarningDetails()">Voir tous les avertissements</button>
+            </div>
+        </div>
+
+        <div id="warning-details" class="warning-details hidden">
+            <div class="card">
+                <div class="card__header">
+                    <h3>🛡️ Avertissements de Sécurité</h3>
+                </div>
+                <div class="card__body">
+                    <ul>
+                        <li>Créer un point de restauration avant d'appliquer les modifications</li>
+                        <li>Ne pas utiliser les commandes bcdedit sur PC portable</li>
+                        <li>Tester les valeurs MouseDataQueueSize/KeyboardDataQueueSize progressivement</li>
+                        <li>Valeurs minimales recommandées: 16 (ne pas descendre en dessous)</li>
+                        <li>Redémarrage requis pour la plupart des modifications registre</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="tabs-nav">
+            <button class="tab-button active" data-tab="mouse-keyboard">🖱️ Souris & Clavier</button>
+            <button class="tab-button" data-tab="network">🌐 Réseau</button>
+            <button class="tab-button" data-tab="menu-delay">📋 Délais Menus</button>
+            <button class="tab-button" data-tab="system-perf">⚡ Performances</button>
+            <button class="tab-button" data-tab="hardware">🔧 Matériel</button>
+        </nav>
+
+        <!-- Tab Contents -->
+        <div class="tab-content">
+            <!-- Mouse & Keyboard Tab -->
+            <div id="mouse-keyboard" class="tab-panel active">
+                <div class="section-header">
+                    <h2>Optimisation Latence Souris & Clavier</h2>
+                    <p>Réduisez la latence d'entrée pour une réactivité maximale dans les jeux</p>
+                </div>
+
+                <div class="optimization-grid">
+                    <div class="card optimization-card">
+                        <div class="card__header">
+                            <h3>Buffer Données Souris</h3>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="mouse-buffer-toggle" checked>
+                                <label for="mouse-buffer-toggle"></label>
+                            </div>
+                        </div>
+                        <div class="card__body">
+                            <p class="description">Réduit le buffer des données souris pour minimiser la latence</p>
+                            <div class="value-control">
+                                <label for="mouse-queue-size">MouseDataQueueSize:</label>
+                                <input type="range" id="mouse-queue-size" min="16" max="50" value="32" class="slider">
+                                <span class="value-display">32</span>
+                            </div>
+                            <div class="restart-badge">Redémarrage requis</div>
+                        </div>
+                    </div>
+
+                    <div class="card optimization-card">
+                        <div class="card__header">
+                            <h3>Buffer Données Clavier</h3>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="keyboard-buffer-toggle" checked>
+                                <label for="keyboard-buffer-toggle"></label>
+                            </div>
+                        </div>
+                        <div class="card__body">
+                            <p class="description">Réduit le buffer des données clavier pour une réponse instantanée</p>
+                            <div class="value-control">
+                                <label for="keyboard-queue-size">KeyboardDataQueueSize:</label>
+                                <input type="range" id="keyboard-queue-size" min="16" max="50" value="32" class="slider">
+                                <span class="value-display">32</span>
+                            </div>
+                            <div class="restart-badge">Redémarrage requis</div>
+                        </div>
+                    </div>
+
+                    <div class="card optimization-card">
+                        <div class="card__header">
+                            <h3>Accélération Souris</h3>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="mouse-accel-toggle" checked>
+                                <label for="mouse-accel-toggle"></label>
+                            </div>
+                        </div>
+                        <div class="card__body">
+                            <p class="description">Désactive l'accélération de la souris Windows</p>
+                            <div class="info-text">Définit MouseSpeed, MouseThreshold1 et MouseThreshold2 à 0</div>
+                        </div>
+                    </div>
+
+                    <div class="card optimization-card">
+                        <div class="card__header">
+                            <h3>Vitesse Clavier</h3>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="keyboard-speed-toggle" checked>
+                                <label for="keyboard-speed-toggle"></label>
+                            </div>
+                        </div>
+                        <div class="card__body">
+                            <p class="description">Optimise les délais et vitesse de répétition du clavier</p>
+                            <div class="info-text">KeyboardDelay: 0, KeyboardSpeed: 31 (maximum)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn--primary" onclick="generateScript('mouse-keyboard')">📥 Générer Script .reg</button>
+                    <button class="btn btn--secondary" onclick="previewScript('mouse-keyboard')">👁️ Aperçu Script</button>
+                </div>
+            </div>
+
+            <!-- Network Tab -->
+            <div id="network" class="tab-panel">
+                <div class="section-header">
+                    <h2>Optimisations Réseau</h2>
+                    <p>Réduisez la latence réseau et améliorez les performances TCP/IP</p>
+                </div>
+
+                <div class="optimization-grid">
+                    <div class="card optimization-card">
+                        <div class="card__header">
+                            <h3>TCP Window Scaling</h3>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="tcp-autotune-toggle" checked>
+                                <label for="tcp-autotune-toggle"></label>
+                            </div>
+                        </div>
+                        <div class="card__body">
+                            <p class="description">Active l'auto-tuning TCP pour de meilleures performances</p>
+                            <div class="command-preview">netsh int tcp set global autotuninglevel=normal</div>
+                        </div>
+                    </div>
+
+                    <div class="card optimization-card">
+                        <div class="card__header">
+                            <h3>Chimney Offload</h3>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="chimney-toggle" checked>
+                                <label for="chimney-toggle"></label>
+                            </div>
+                        </div>
+                        <div class="card__body">
+                            <p class="description">Active le déchargement TCP vers la carte réseau</p>
+                            <div class="command-preview">netsh int tcp set global chimney=enabled</div>
+                        </div>
+                    </div>
+
+                    <div class="card optimization-card">
+                        <div class="card__header">
+                            <h3>Receive Side Scaling</h3>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="rss-toggle" checked>
+                                <label for="rss-toggle"></label>
+                            </div>
+                        </div>
+                        <div class="card__body">
+                            <p class="description">Active la mise à l'échelle côté réception</p>
+                            <div class="command-preview">netsh int tcp set global rss=enabled</div>
+                        </div>
+                    </div>
+
+                    <div class="card optimization-card">
+                        <div class="card__header">
+                            <h3>TCP Optimizations</h3>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="tcp-registry-toggle" checked>
+                                <label for="tcp-registry-toggle"></label>
+                            </div>
+                        </div>
+                        <div class="card__body">
+                            <p class="description">Optimise TcpAckFrequency et désactive l'algorithme de Nagle</p>
+                            <div class="info-text">TcpAckFrequency: 1, TCPNoDelay: 1</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn--primary" onclick="generateScript('network')">📥 Générer Script .bat</button>
+                    <button class="btn btn--secondary" onclick="previewScript('network')">👁️ Aperçu Script</button>
+                </div>
+            </div>
+
+            <!-- Menu Delay Tab -->
+            <div id="menu-delay" class="tab-panel">
+                <div class="section-header">
+                    <h2>Optimisation Délais des Menus</h2>
+                    <p>Réduisez les délais d'affichage des menus Windows pour une interface plus réactive</p>
+                </div>
+
+                <div class="optimization-grid">
+                    <div class="card optimization-card">
+                        <div class="card__header">
+                            <h3>Délai d'Affichage des Menus</h3>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="menu-delay-toggle" checked>
+                                <label for="menu-delay-toggle"></label>
+                            </div>
+                        </div>
+                        <div class="card__body">
+                            <p class="description">Réduit le délai d'affichage des menus de 400ms à 20ms</p>
+                            <div class="value-control">
+                                <label for="menu-delay-value">MenuShowDelay (ms):</label>
+                                <input type="range" id="menu-delay-value" min="20" max="400" value="20" class="slider">
+                                <span class="value-display">20</span>
+                            </div>
+                            <div class="restart-badge">Redémarrage requis</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn--primary" onclick="generateScript('menu-delay')">📥 Générer Script .reg</button>
+                    <button class="btn btn--secondary" onclick="previewScript('menu-delay')">👁️ Aperçu Script</button>
+                </div>
+            </div>
+
+            <!-- System Performance Tab -->
+            <div id="system-perf" class="tab-panel">
+                <div class="section-header">
+                    <h2>Optimisations Performances Système</h2>
+                    <p>Améliorez les performances globales du système et la réactivité</p>
+                </div>
+
+                <div class="optimization-grid">
+                    <div class="card optimization-card">
+                        <div class="card__header">
+                            <h3>Profil Haute Performance</h3>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="power-profile-toggle" checked>
+                                <label for="power-profile-toggle"></label>
+                            </div>
+                        </div>
+                        <div class="card__body">
+                            <p class="description">Active le profil d'alimentation haute performance</p>
+                            <div class="command-preview">powercfg -duplicatescheme 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c</div>
+                        </div>
+                    </div>
+
+                    <div class="card optimization-card">
+                        <div class="card__header">
+                            <h3>Résolution Timer Global</h3>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="timer-resolution-toggle" checked>
+                                <label for="timer-resolution-toggle"></label>
+                            </div>
+                        </div>
+                        <div class="card__body">
+                            <p class="description">Force la résolution timer à 0.5ms (Windows 11 uniquement)</p>
+                            <div class="info-text">GlobalTimerResolutionRequests: 1</div>
+                            <div class="restart-badge">Redémarrage requis</div>
+                        </div>
+                    </div>
+
+                    <div class="card optimization-card">
+                        <div class="card__header">
+                            <h3>Réactivité Système</h3>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="system-responsiveness-toggle" checked>
+                                <label for="system-responsiveness-toggle"></label>
+                            </div>
+                        </div>
+                        <div class="card__body">
+                            <p class="description">Priorise les applications actives</p>
+                            <div class="value-control">
+                                <label for="responsiveness-value">SystemResponsiveness:</label>
+                                <input type="range" id="responsiveness-value" min="10" max="20" value="10" class="slider">
+                                <span class="value-display">10</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn--primary" onclick="generateScript('system-perf')">📥 Générer Script Complet</button>
+                    <button class="btn btn--secondary" onclick="previewScript('system-perf')">👁️ Aperçu Script</button>
+                </div>
+            </div>
+
+            <!-- Hardware Tab -->
+            <div id="hardware" class="tab-panel">
+                <div class="section-header">
+                    <h2>Optimisations Matériel</h2>
+                    <p>Optimisez les paramètres matériels pour des performances maximales</p>
+                </div>
+
+                <div class="optimization-grid">
+                    <div class="card optimization-card">
+                        <div class="card__header">
+                            <h3>Économie d'Énergie USB</h3>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="usb-power-toggle" checked>
+                                <label for="usb-power-toggle"></label>
+                            </div>
+                        </div>
+                        <div class="card__body">
+                            <p class="description">Désactive l'économie d'énergie USB pour éviter les déconnexions</p>
+                            <div class="info-text">Guide: Gestionnaire de périphériques > Contrôleurs USB</div>
+                        </div>
+                    </div>
+
+                    <div class="card optimization-card">
+                        <div class="card__header">
+                            <h3>Ports USB Optimaux</h3>
+                            <div class="info-badge">ℹ️</div>
+                        </div>
+                        <div class="card__body">
+                            <p class="description">Brancher souris/clavier sur les ports USB les plus hauts</p>
+                            <div class="info-text">Ports connectés directement au CPU pour latence minimale</div>
+                        </div>
+                    </div>
+
+                    <div class="card optimization-card">
+                        <div class="card__header">
+                            <h3>Logiciels Recommandés</h3>
+                            <div class="info-badge">📦</div>
+                        </div>
+                        <div class="card__body">
+                            <p class="description">Outils supplémentaires pour l'optimisation</p>
+                            <div class="software-list">
+                                <div class="software-item">
+                                    <span class="software-name">MSI Utility V3</span>
+                                    <span class="software-purpose">Mode MSI GPU</span>
+                                </div>
+                                <div class="software-item">
+                                    <span class="software-name">MarkC Mouse Fix</span>
+                                    <span class="software-purpose">Accélération souris</span>
+                                </div>
+                                <div class="software-item">
+                                    <span class="software-name">SetTimerResolution</span>
+                                    <span class="software-purpose">Timer 0.5ms</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn--primary" onclick="generateScript('hardware')">📥 Générer Guide Instructions</button>
+                    <button class="btn btn--secondary" onclick="showSoftwareLinks()">🔗 Liens Logiciels</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Global Actions -->
+        <div class="global-actions">
+            <button class="btn btn--primary btn--full-width" onclick="generateAllScripts()">
+                📦 Générer Pack Complet d'Optimisation
+            </button>
+        </div>
+
+        <!-- Script Preview Modal -->
+        <div id="script-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modal-title">Aperçu du Script</h3>
+                    <button class="modal-close" onclick="closeModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <pre id="script-preview"></pre>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn--secondary" onclick="closeModal()">Fermer</button>
+                    <button class="btn btn--primary" id="download-script">📥 Télécharger</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2025 ASUS TUF F17 FX707ZM Optimizer - Optimisations pour gaming haute performance</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
