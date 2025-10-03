@@ -1,1 +1,1 @@
-https://www.stalwart-fudge-b81381.netlify.app
+stalwart-fudge-b81381.netlify.app
